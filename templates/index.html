@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Face Detection ShowCase</title>
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <style>
+    body {
+      background-color: #000;
+      color: #fff;
+      font-family: 'Courier New', Courier, monospace;
+    }
+
+    h1 {
+      font-size: 36px;
+      text-align: center;
+      margin-top: 50px;
+    }
+
+    #videoStream {
+      display: block;
+      margin: 0 auto;
+      border: 3px solid #fff;
+      border-radius: 10px;
+    }
+
+    #videoStream:hover {
+      border-color: #00ff00;
+    }
+/* 
+    .button {
+      background-color: #f44336;
+      border: none;
+      color: white;
+      padding: 15px 32px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      margin: 4px 2px;
+      cursor: pointer;
+      border-radius: 8px;
+      transition: background-color 0.3s;
+    }
+
+    .button:hover {
+      background-color: #555;
+    } */
+
+    .centered {
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h1>Face Detection Showcase</h1>
+  <!-- <div class="centered">
+    <p>Press 'p' to pause and 'r' to resume</p>
+  </div> -->
+  <img id="videoStream" src="{{url_for('video_feed')}}" width="640" height="480"/>
+  
+  <!-- <button class="button">Pause</button> -->
+  <script>
+    document.addEventListener('keydown', function(event){
+      if (event.key=='p'){
+        $.ajax({
+          url:"/control",
+          type:'POST',
+          contentType:'application/json',
+          data:JSON.stringify({action:'pause'}),
+          success: function(){
+            console.log("Success", JSON.stringify({action:'pause'}))
+          },
+          error: function(){
+            console.error("Error")
+          }
+        });
+      } else if (event.key=='r'){
+        $.ajax({
+          url:"/control",
+          type:'POST',
+          contentType:'application/json',
+          data:JSON.stringify({action:'resume'}),
+          success: function(){
+            console.log("Success", JSON.stringify({action:'resume'}))
+          },
+          error: function(){
+            console.error("Error")
+          }
+        });
+        location.reload();
+      }
+    })
+  </script>
+</body>
+</html>
